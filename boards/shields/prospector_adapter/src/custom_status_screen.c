@@ -6,6 +6,7 @@
 #include "widgets/layer_roller.h"
 #include "widgets/battery_bar.h"
 #include "widgets/caps_word_indicator.h"
+#include "widgets/idle_indicator.h"
 
 #include <fonts.h>
 #include <sf_symbols.h>
@@ -18,6 +19,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 static struct zmk_widget_layer_roller layer_roller_widget;
 static struct zmk_widget_battery_bar battery_bar_widget;
 static struct zmk_widget_caps_word_indicator caps_word_indicator_widget;
+static struct zmk_widget_idle_indicator idle_indicator_widget;
 
 lv_obj_t *zmk_display_status_screen() {
     lv_obj_t *screen;
@@ -39,6 +41,8 @@ lv_obj_t *zmk_display_status_screen() {
     lv_obj_set_size(zmk_widget_layer_roller_obj(&layer_roller_widget), 224, 140);
     lv_obj_align(zmk_widget_layer_roller_obj(&layer_roller_widget), LV_ALIGN_LEFT_MID, 0, -20);
 
+    zmk_widget_idle_indicator_init(&idle_indicator_widget, screen);
+    lv_obj_align(zmk_widget_idle_indicator_obj(&idle_indicator_widget), LV_ALIGN_TOP_MID, 0, 10);
 
     return screen;
 }
