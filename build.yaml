@@ -1,11 +1,8 @@
 include:
-#  - board: seeeduino_xiao_ble
-#    shield: totem_left
-#  - board: seeeduino_xiao_ble
-#    shield: totem_right
   - board: seeeduino_xiao_ble
-    shield: totem_dongle prospector_adapter
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    shield: klor_dongle prospector_adapter
   - board: seeeduino_xiao_ble
     shield: settings_reset
+
+# Removed: totem_left / totem_right (Totem-specific, replaced by KLOR halves in zmk-config-klor)
+# Removed: studio-rpc-usb-uart snippet and ZMK_STUDIO — not available in ZMK v0.3
