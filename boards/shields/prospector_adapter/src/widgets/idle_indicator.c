@@ -58,8 +58,8 @@ ZMK_SUBSCRIPTION(widget_idle_indicator, zmk_keycode_state_changed);
 static int idle_indicator_listener(const zmk_event_t *eh) {
     if (as_zmk_keycode_state_changed(eh) != NULL) {
         last_activity_time = k_uptime_get();
-        ZMK_EVENT_RAISE(eh);
-        return ZMK_LISTENER_ACTION_CONTINUE;
+        // ZMK_EVENT_RAISE removed: eh is a pointer and re-raising a received
+        // event is incorrect. ZMK_LISTENER_ACTION_CONTINUE already passes it along.
     }
     return ZMK_LISTENER_ACTION_CONTINUE;
 }
