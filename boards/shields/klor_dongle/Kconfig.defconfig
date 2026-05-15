@@ -1,7 +1,7 @@
 if SHIELD_KLOR_DONGLE
 
 config ZMK_KEYBOARD_NAME
-    default "KLOR"
+    default "Prospector"
 
 config ZMK_SPLIT
     default y

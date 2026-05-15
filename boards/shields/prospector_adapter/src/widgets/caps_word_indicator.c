@@ -18,9 +18,9 @@ struct caps_word_indicator_state {
 
 static void caps_word_indicator_set_active(lv_obj_t *label, struct caps_word_indicator_state state) {
     if (state.active) {
-        lv_obj_set_style_text_color(label, lv_color_hex(0xEBCB8B), LV_PART_MAIN); // Nord13 amber
+        lv_obj_set_style_text_color(label, lv_color_hex(0xEBCB8B), LV_PART_MAIN); // Shuko amber — caps active
     } else {
-        lv_obj_set_style_text_color(label, lv_color_hex(0x3B4252), LV_PART_MAIN); // Nord1 — hidden
+        lv_obj_set_style_text_color(label, lv_color_hex(0x1E2D3F), LV_PART_MAIN); // Shuko header bg — hidden
     }
 }
 
@@ -51,7 +51,7 @@ int zmk_widget_caps_word_indicator_init(struct zmk_widget_caps_word_indicator *w
     // LV_FONT_DECLARE(SF_Compact_Text_Bold_32);
 
     lv_label_set_text(widget->obj, SF_SYMBOL_CHARACTER_CURSOR_IBEAM);
-    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x030303), LV_PART_MAIN);
+    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x1E2D3F), LV_PART_MAIN); // hidden until active
     lv_obj_set_style_text_font(widget->obj, &SF_Compact_Text_Bold_32, LV_PART_MAIN);
     lv_obj_set_style_text_align(widget->obj, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
 
