@@ -18,9 +18,9 @@ struct caps_word_indicator_state {
 
 static void caps_word_indicator_set_active(lv_obj_t *label, struct caps_word_indicator_state state) {
     if (state.active) {
-        lv_obj_set_style_text_color(label, lv_color_hex(0x00ffe5), LV_PART_MAIN);
+        lv_obj_set_style_text_color(label, lv_color_hex(0xEBCB8B), LV_PART_MAIN); // Nord13 amber
     } else {
-        lv_obj_set_style_text_color(label, lv_color_hex(0x202020), LV_PART_MAIN);
+        lv_obj_set_style_text_color(label, lv_color_hex(0x3B4252), LV_PART_MAIN); // Nord1 — hidden
     }
 }
 

@@ -133,8 +133,8 @@ int zmk_widget_layer_roller_init(struct zmk_widget_layer_roller *widget, lv_obj_
 
     static lv_style_t style;
     lv_style_init(&style);
-    lv_style_set_bg_color(&style, lv_color_black());
-    lv_style_set_text_color(&style, lv_color_white());
+    lv_style_set_bg_color(&style, lv_color_hex(0x2E3440));  // Nord0
+    lv_style_set_text_color(&style, lv_color_hex(0xD8DEE9)); // Nord4
     // lv_style_set_text_letter_space(&style, 2);
     lv_style_set_border_width(&style, 0);
     lv_style_set_pad_all(&style, 0);
@@ -143,11 +143,11 @@ int zmk_widget_layer_roller_init(struct zmk_widget_layer_roller *widget, lv_obj_
     lv_obj_add_style(widget->obj, &style, 0);
     lv_obj_set_style_bg_opa(widget->obj, LV_OPA_TRANSP, LV_PART_SELECTED);
     lv_obj_set_style_text_font(widget->obj, &FRAC_Regular_48, LV_PART_SELECTED);
-    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0xffffff), LV_PART_SELECTED);
+    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x88C0D0), LV_PART_SELECTED); // Nord8 frost
     // lv_obj_set_style_text_line_space(widget->obj, 20, LV_PART_SELECTED);
     // lv_obj_set_style_text_line_space(widget->obj, 20, LV_PART_MAIN);
     lv_obj_set_style_text_font(widget->obj, &FRAC_Thin_48, LV_PART_MAIN);
-    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x909090), LV_PART_MAIN);
+    lv_obj_set_style_text_color(widget->obj, lv_color_hex(0x4C566A), LV_PART_MAIN);  // Nord3 inactive
     // lv_obj_set_style_text_align(widget->obj, LV_TEXT_ALIGN_CENTER, 0);
 
     lv_obj_add_event_cb(widget->obj, mask_event_cb, LV_EVENT_ALL, NULL);
