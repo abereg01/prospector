@@ -94,10 +94,15 @@ static lv_obj_t *create_separator(lv_obj_t *parent) {
     return sep;
 }
 
-static lv_obj_t *create_mod_label(lv_obj_t *parent, const char *text) {
+static lv_obj_t *create_mod_label(lv_obj_t *parent, int position) {
     lv_obj_t *label = lv_label_create(parent);
-    lv_label_set_text(label, text);
-    lv_obj_set_style_text_font(label, &FG_Medium_20, LV_PART_MAIN);
+    if (modifier_order_uses_symbols()) {
+        lv_label_set_text(label, modifier_order_get_symbol(position));
+        lv_obj_set_style_text_font(label, &Symbols_Bold_26, LV_PART_MAIN);
+    } else {
+        lv_label_set_text(label, modifier_order_get_text(position));
+        lv_obj_set_style_text_font(label, &FG_Medium_20, LV_PART_MAIN);
+    }
     lv_obj_set_style_text_color(label, lv_color_hex(DISPLAY_COLOR_MOD_INACTIVE), LV_PART_MAIN);
     return label;
 }
@@ -113,7 +118,7 @@ int zmk_widget_modifier_indicator_init(struct zmk_widget_modifier_indicator *wid
     lv_obj_set_flex_align(widget->obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
     for (int i = 0; i < 4; i++) {
-        widget->mod_labels[i] = create_mod_label(widget->obj, modifier_order_get_text(i));
+        widget->mod_labels[i] = create_mod_label(widget->obj, i);
         if (i < 3) {
             create_separator(widget->obj);
         }
