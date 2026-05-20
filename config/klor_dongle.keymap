@@ -18,7 +18,7 @@
  */
 
 #include <behaviors.dtsi>
-#include <behaviors/num_word.dtsi>
+// #include <behaviors/num_word.dtsi>  // removed: not present in ZMK main include path
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
