@@ -5,6 +5,7 @@
 #include "layer_name.h"
 #include "layer_display.h"
 #include "connection_status.h"
+#include "aurora.h"
 #include "display_colors.h"
 
 #include <fonts.h>
@@ -12,13 +13,16 @@
 // Battery circles and Output widgets removed for this build:
 //   - No batteries (dongle + halves are USB-powered)
 //   - No BLE output profiles (Prospector is USB HID central)
-// Bottom-right is reserved for the future Saturn animation widget.
+// Bottom-right slot now hosts a small Nord aurora preview. Once the idle
+// screensaver phase lands, the same aurora widget will scale to full-screen
+// after CONFIG_ZMK_IDLE_TIMEOUT_MS elapses with no key activity.
 
 static struct zmk_widget_modifier_indicator modifier_indicator_widget;
 static struct zmk_widget_wpm_meter wpm_meter_widget;
 static struct zmk_widget_layer_name layer_name_widget;
 static struct zmk_widget_layer_display layer_display_widget;
 static struct zmk_widget_connection_status connection_status_widget;
+static struct zmk_widget_aurora aurora_widget;
 
 lv_obj_t *zmk_display_status_screen() {
     // Display: 240×280 px, Nord0 background.
@@ -61,6 +65,13 @@ lv_obj_t *zmk_display_status_screen() {
     lv_obj_set_style_text_font(klor_label, &DINishExpanded_Light_36, LV_PART_MAIN);
     lv_obj_set_style_text_color(klor_label, lv_color_hex(DISPLAY_COLOR_MOD_ACTIVE), LV_PART_MAIN);  // Nord8
     lv_obj_set_pos(klor_label, 10, 220);
+
+    // ── Nord aurora (bottom-right, fills the previously-empty slot) ───────────
+    // Small preview here; the same widget will go full-screen at idle in a
+    // future phase. 100×75 fits between the KLOR wordmark and the screen edge,
+    // below the layer dots / connection indicators row.
+    zmk_widget_aurora_init(&aurora_widget, screen, 100, 75);
+    lv_obj_set_pos(zmk_widget_aurora_obj(&aurora_widget), 130, 200);
 
     return screen;
 }
