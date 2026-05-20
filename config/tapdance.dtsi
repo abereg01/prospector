@@ -38,7 +38,7 @@
             label = "TD_NAV_NUM";
             #binding-cells = <0>;
             tapping-term-ms = <250>;
-            bindings = <&mo NAV>, <&num_word NUM>;
+            bindings = <&mo NAV>, <&mo NUM>;
         };
 
         td_colemak: tap_dance_colemak {
