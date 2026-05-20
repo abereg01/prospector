@@ -1,0 +1,309 @@
+/*
+ * Combo definitions for the KLOR keymap.
+ * Include this file in klor.keymap via: #include "combos.dtsi"
+ *
+ * Key position map:
+ *
+ *  ┌─────┬─────┬─────┬─────┬─────┐                       ┌─────┬─────┬─────┬─────┬─────┐
+ *  │  0  │  1  │  2  │  3  │  4  │                       │  5  │  6  │  7  │  8  │  9  │
+ *  ├─────┼─────┼─────┼─────┼─────┤                       ├─────┼─────┼─────┼─────┼─────┤
+ *  │ 11  │ 12  │ 13  │ 14  │ 15  │                       │ 16  │ 17  │ 18  │ 19  │ 20  │
+ *  ├─────┼─────┼─────┼─────┼─────┼─────┐         ┌─────┼─────┼─────┼─────┼─────┼─────┤
+ *  │ 23  │ 24  │ 25  │ 26  │ 27  │ 28  │         │ 29  │ 30  │ 31  │ 32  │ 33  │ 34  │
+ *  └─────┴─────┴─────┼─────┼─────┼─────┘         └─────┼─────┼─────┼─────┴─────┴─────┘
+ *                    │ 36  │ 37  │ 38  │ 39  40  │ 41  │ 42  │ 43  │
+ *                    └─────┴─────┴─────┴─────────┴─────┴─────┴─────┘
+ *
+ * Note: outer pinky columns (10, 21, 22, 35) are &trans in all layers and excluded here.
+ *
+ * Layer policy:
+ *   - ESC, BSPC, DEL combos are active on ALL layers (no layers restriction).
+ *   - All other combos are BASE + COLEMAK (layers = <BASE COLEMAK>).
+ */
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+
+        // ── Navigation ─────────────────────────────────────────────────────────
+        // W + E  →  Escape  [all layers]
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <1 2>;
+            bindings = <&kp ESC>;
+            require-prior-idle-ms = <100>;
+        };
+
+        // S + D  →  Tab  [BASE + COLEMAK]
+        combo_tab {
+            timeout-ms = <50>;
+            key-positions = <12 13>;
+            bindings = <&kp TAB>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // R + T  →  Delete  [all layers]
+        combo_del_top_l {
+            timeout-ms = <50>;
+            key-positions = <3 4>;
+            bindings = <&kp DEL>;
+            require-prior-idle-ms = <100>;
+        };
+
+        // Y + U  →  Delete  [all layers]
+        combo_del_top_r {
+            timeout-ms = <50>;
+            key-positions = <5 6>;
+            bindings = <&kp DEL>;
+            require-prior-idle-ms = <100>;
+        };
+
+        // F + G  →  Backspace  [all layers]
+        combo_bspc_home_l {
+            timeout-ms = <50>;
+            key-positions = <14 15>;
+            bindings = <&kp BSPC>;
+            require-prior-idle-ms = <100>;
+        };
+
+        // H + J  →  Backspace  [all layers]
+        combo_bspc_home_r {
+            timeout-ms = <50>;
+            key-positions = <16 17>;
+            bindings = <&kp BSPC>;
+            require-prior-idle-ms = <100>;
+        };
+
+        // F + J  →  Caps Word  [BASE + COLEMAK]
+        combo_caps_word {
+            timeout-ms = <50>;
+            key-positions = <14 17>;
+            bindings = <&caps_word>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // ── Clipboard ──────────────────────────────────────────────────────────
+        // X + C  →  Copy  [BASE + COLEMAK]
+        combo_copy {
+            timeout-ms = <50>;
+            key-positions = <24 25>;
+            bindings = <&kp LC(C)>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // C + V  →  Paste  [BASE + COLEMAK]
+        combo_paste {
+            timeout-ms = <50>;
+            key-positions = <25 26>;
+            bindings = <&kp LC(V)>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // X + V  →  Cut  [BASE + COLEMAK]
+        combo_cut {
+            timeout-ms = <50>;
+            key-positions = <24 26>;
+            bindings = <&kp LC(X)>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // ── Symbols: left side ─────────────────────────────────────────────────
+        // T + G  →  $  [BASE + COLEMAK]  (vertical top→home)
+        combo_dllr {
+            timeout-ms = <50>;
+            key-positions = <4 15>;
+            bindings = <&kp DLLR>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // R + F  →  |  [BASE + COLEMAK]  (vertical top→home)
+        combo_pipe {
+            timeout-ms = <50>;
+            key-positions = <3 14>;
+            bindings = <&kp PIPE>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // Q + W  →  ~  [BASE + COLEMAK]
+        combo_tilde {
+            timeout-ms = <50>;
+            key-positions = <0 1>;
+            bindings = <&kp TILDE>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // E + R  →  &  [BASE + COLEMAK]
+        combo_amps {
+            timeout-ms = <50>;
+            key-positions = <2 3>;
+            bindings = <&kp AMPS>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // A + S  →  @  [BASE + COLEMAK]
+        combo_at {
+            timeout-ms = <50>;
+            key-positions = <11 12>;
+            bindings = <&kp AT>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // D + F  →  #  [BASE + COLEMAK]
+        combo_hash {
+            timeout-ms = <50>;
+            key-positions = <13 14>;
+            bindings = <&kp HASH>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // S + X  →  `  [BASE + COLEMAK]  (diagonal home→bottom)
+        combo_grave {
+            timeout-ms = <50>;
+            key-positions = <12 24>;
+            bindings = <&kp GRAVE>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // Z + X  →  / / \  [BASE + COLEMAK]
+        combo_fslh_bslh {
+            timeout-ms = <50>;
+            key-positions = <23 24>;
+            bindings = <&mm_fslh_bslh>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // ── Symbols: right side ────────────────────────────────────────────────
+        // Y + H  →  ^  [BASE + COLEMAK]  (vertical top→home)
+        combo_caret {
+            timeout-ms = <50>;
+            key-positions = <5 16>;
+            bindings = <&kp CARET>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // I + K  →  *  [BASE + COLEMAK]  (vertical top→home)
+        combo_star {
+            timeout-ms = <50>;
+            key-positions = <7 18>;
+            bindings = <&kp STAR>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // O + P  →  + / =  [BASE + COLEMAK]
+        combo_plus_equal {
+            timeout-ms = <50>;
+            key-positions = <8 9>;
+            bindings = <&mm_plus_equal>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // L + ;  →  ' / "  [BASE + COLEMAK]
+        combo_sqt_dqt {
+            timeout-ms = <50>;
+            key-positions = <19 20>;
+            bindings = <&kp SQT>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // . + ?  →  - / _  [BASE + COLEMAK]
+        combo_minus_under {
+            timeout-ms = <50>;
+            key-positions = <33 34>;
+            bindings = <&mm_minus_under>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // ── Brackets / parens ──────────────────────────────────────────────────
+        // U + I  →  (  [BASE + COLEMAK, top row]
+        combo_lpar_top {
+            timeout-ms = <50>;
+            key-positions = <6 7>;
+            bindings = <&kp LPAR>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // I + O  →  )  [BASE + COLEMAK, top row]
+        combo_rpar_top {
+            timeout-ms = <50>;
+            key-positions = <7 8>;
+            bindings = <&kp RPAR>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // J + K  →  {  [BASE + COLEMAK, home row]
+        combo_lbrc_home {
+            timeout-ms = <50>;
+            key-positions = <17 18>;
+            bindings = <&kp LBRC>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // K + L  →  }  [BASE + COLEMAK, home row]
+        combo_rbrc_home {
+            timeout-ms = <50>;
+            key-positions = <18 19>;
+            bindings = <&kp RBRC>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // M + ,  →  [  [BASE + COLEMAK, bottom row]
+        combo_lbkt {
+            timeout-ms = <50>;
+            key-positions = <31 32>;
+            bindings = <&kp LBKT>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // , + .  →  ]  [BASE + COLEMAK, bottom row]
+        combo_rbkt {
+            timeout-ms = <50>;
+            key-positions = <32 33>;
+            bindings = <&kp RBKT>;
+            require-prior-idle-ms = <100>;
+            layers = <BASE COLEMAK>;
+        };
+
+        // ── System layer combos ────────────────────────────────────────────────
+        // S + D  →  Alt + Tab  [SYSTEM only]
+        // No require-prior-idle-ms: the SYSTEM thumb key press would reset the idle timer
+        combo_alt_tab {
+            timeout-ms = <50>;
+            key-positions = <12 13>;
+            bindings = <&kp LA(TAB)>;
+            layers = <SYSTEM>;
+        };
+
+        // X + C  →  Alt + Shift + Tab  [SYSTEM only]
+        // No require-prior-idle-ms: the SYSTEM thumb key press would reset the idle timer
+        combo_alt_shift_tab {
+            timeout-ms = <50>;
+            key-positions = <24 25>;
+            bindings = <&kp LA(LS(TAB))>;
+            layers = <SYSTEM>;
+        };
+
+    };
+};

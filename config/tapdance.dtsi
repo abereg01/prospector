@@ -1,0 +1,53 @@
+/ {
+    behaviors {
+
+        td_a: tap_dance_a {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_A_AE";             // tap → A (GUI when held) | double-tap → Ä (A-umlaut)
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&hm LGUI A>, <&kp RA(Q)>;  // RA(Q) = AltGr+Q = Ä  (adjust if your layout differs)
+        };
+
+        td_p: tap_dance_p {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_P_ARING";          // tap → P | double-tap → Å (A-ring)
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp P>, <&kp RA(A)>;        // RA(A) = AltGr+A = Å
+        };
+
+        td_semi_aa: tap_dance_semi_aring {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_SEMI_ARING";       // tap → ; | double-tap → Å  (Colemak top-right)
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp SEMI>, <&kp RA(A)>;     // RA(A) = AltGr+A = Å
+        };
+
+        td_o_colemak: tap_dance_o_colemak {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_O_OE";             // tap → O (RCTRL when held) | double-tap → Ö  (Colemak home-right)
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&hm RCTRL O>, <&kp RA(O)>;  // RA(O) = AltGr+O = Ö
+        };
+
+        td_nav_num: tap_dance_nav_num {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_NAV_NUM";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&mo NAV>, <&num_word NUM>;
+        };
+
+        td_colemak: tap_dance_colemak {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_COLEMAK";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&trans>, <&tog COLEMAK>;  // single-tap = pass-through; double-tap = toggle Colemak DH
+        };
+
+    };
+};

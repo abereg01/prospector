@@ -1,0 +1,50 @@
+/ {
+    behaviors {
+
+        mo_tog: mo_tog {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MO_TOG";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "hold-preferred";
+            bindings = <&mo>, <&tog>;
+        };
+
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            flavor = "balanced";           // resolves hold/tap based on key-up, not time
+            tapping-term-ms = <280>;       // generous window — require-prior-idle does the heavy lifting
+            quick-tap-ms = <175>;          // repeat key if tapped twice quickly (e.g. fast space)
+            require-prior-idle-ms = <150>; // if a key was pressed <150ms ago, always tap — kills rolling misfires
+            hold-trigger-on-release;       // hold decision deferred until you release, not when next key is pressed
+            bindings = <&kp>, <&kp>;
+        };
+
+        mm_plus_equal: mm_plus_equal {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_PLUS_EQUAL";
+            #binding-cells = <0>;
+            bindings = <&kp PLUS>, <&kp EQUAL>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_minus_under: mm_minus_under {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_MINUS_UNDER";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp UNDER>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_fslh_bslh: mm_fslh_bslh {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_FSLH_BSLH";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH>, <&kp BSLH>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+    };
+};

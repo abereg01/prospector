@@ -1,0 +1,36 @@
+/ {
+    behaviors {
+
+        mm_comma: mod_morph_comma {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_COMMA";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp SEMI>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_dot: mod_morph_dot {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_DOT";
+            #binding-cells = <0>;
+            bindings = <&kp DOT>, <&kp COLON>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        mm_qmark: mod_morph_qmark {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_QMARK";
+            #binding-cells = <0>;
+            bindings = <&kp QMARK>, <&kp EXCL>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        scrl_h: scroll_horizontal {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "SCRL_H";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
+        };
+
+    };
+};

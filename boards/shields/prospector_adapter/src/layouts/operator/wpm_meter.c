@@ -21,6 +21,7 @@ static int prev_active_bars = 0;
 static int peak_position = 0;
 static int peak_hold_counter = 0;
 static int peak_decay_counter = 0;
+static uint8_t current_layer = 0;
 static const float smoothing_factor_up = 0.3f;
 static const float smoothing_factor_down = 0.05f;
 
@@ -34,13 +35,14 @@ struct layer_state {
 
 static void wpm_meter_render(int active_bars) {
     struct zmk_widget_wpm_meter *widget;
+    uint32_t active_color = display_color_for_layer(current_layer);
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
         if (active_bars != prev_active_bars) {
             int min_bar = (active_bars < prev_active_bars) ? active_bars : prev_active_bars;
             int max_bar = (active_bars > prev_active_bars) ? active_bars : prev_active_bars;
             for (int i = min_bar; i < max_bar; i++) {
                 lv_color_t color = (i < active_bars)
-                    ? lv_color_hex(DISPLAY_COLOR_WPM_BAR_ACTIVE)
+                    ? lv_color_hex(active_color)
                     : lv_color_hex(DISPLAY_COLOR_WPM_BAR_INACTIVE);
                 lv_obj_set_style_bg_color(widget->bars[i], color, LV_PART_MAIN);
             }
@@ -121,25 +123,19 @@ static struct wpm_meter_state wpm_meter_get_state(const zmk_event_t *eh) {
     return (struct wpm_meter_state){.wpm = zmk_wpm_get_state()};
 }
 
+// Layer subscription: drives per-layer accent color on the WPM bars and the
+// WPM number. The layer NAME is rendered by the separate layer_name widget.
 static void layer_update_cb(struct layer_state state) {
+    current_layer = state.index;
+    uint32_t accent = display_color_for_layer(current_layer);
     struct zmk_widget_wpm_meter *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
-        const char *layer_name = zmk_keymap_layer_name(zmk_keymap_layer_index_to_id(state.index));
-        char display_name[32];
-
-        if (layer_name && *layer_name) {
-            snprintf(display_name, sizeof(display_name), "%s", layer_name);
-        } else {
-            snprintf(display_name, sizeof(display_name), "Layer %d", state.index);
+        // Re-tint the WPM number
+        lv_obj_set_style_text_color(widget->wpm_label, lv_color_hex(accent), LV_PART_MAIN);
+        // Re-color all currently-active bars
+        for (int i = 0; i < prev_active_bars; i++) {
+            lv_obj_set_style_bg_color(widget->bars[i], lv_color_hex(accent), LV_PART_MAIN);
         }
-
-#if IS_ENABLED(CONFIG_PROSPECTOR_LAYER_NAME_UPPERCASE)
-        for (int i = 0; display_name[i]; i++) {
-            display_name[i] = toupper((unsigned char)display_name[i]);
-        }
-#endif
-
-        lv_label_set_text(widget->layer_label, display_name);
     }
 }
 
@@ -187,26 +183,17 @@ int zmk_widget_wpm_meter_init(struct zmk_widget_wpm_meter *widget, lv_obj_t *par
     lv_obj_set_style_radius(widget->peak_indicator, 1, LV_PART_MAIN);
     lv_obj_add_flag(widget->peak_indicator, LV_OBJ_FLAG_HIDDEN);
 
+    // WPM number — bg matches screen Nord0 so the "tab" effect disappears
+    // (was 0x000000, leaked black against the Nord backdrop)
     widget->wpm_label = lv_label_create(widget->obj);
     lv_label_set_text(widget->wpm_label, "0");
     lv_obj_set_style_text_font(widget->wpm_label, &FR_Medium_32, LV_PART_MAIN);
     lv_obj_set_style_text_color(widget->wpm_label, lv_color_hex(DISPLAY_COLOR_WPM_TEXT), LV_PART_MAIN);
-    lv_obj_set_style_bg_color(widget->wpm_label, lv_color_hex(0x000000), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(widget->wpm_label, lv_color_hex(DISPLAY_COLOR_BG), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(widget->wpm_label, LV_OPA_COVER, LV_PART_MAIN);
     lv_obj_set_style_pad_hor(widget->wpm_label, 6, LV_PART_MAIN);
     lv_obj_set_style_pad_ver(widget->wpm_label, 4, LV_PART_MAIN);
     lv_obj_align(widget->wpm_label, LV_ALIGN_TOP_LEFT, -7, -9);
-
-    widget->layer_label = lv_label_create(widget->obj);
-    lv_label_set_text(widget->layer_label, "");
-    lv_obj_set_style_text_font(widget->layer_label, &DINishExpanded_Light_36, LV_PART_MAIN);
-    lv_obj_set_style_text_color(widget->layer_label, lv_color_hex(DISPLAY_COLOR_LAYER_TEXT), LV_PART_MAIN);
-    lv_obj_set_style_bg_color(widget->layer_label, lv_color_hex(0x000000), LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(widget->layer_label, LV_OPA_COVER, LV_PART_MAIN);
-    lv_obj_set_style_pad_hor(widget->layer_label, 8, LV_PART_MAIN);
-    lv_obj_set_style_pad_top(widget->layer_label, 7, LV_PART_MAIN);
-    lv_obj_set_style_pad_bottom(widget->layer_label, 3, LV_PART_MAIN);
-    lv_obj_align(widget->layer_label, LV_ALIGN_BOTTOM_RIGHT, 9, 7);
 
     sys_slist_append(&widgets, &widget->node);
     widget_wpm_meter_init();

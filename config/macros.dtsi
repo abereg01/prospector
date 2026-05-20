@@ -1,0 +1,18 @@
+/*
+ * Macro definitions for the KLOR keymap.
+ * Include this file in klor.keymap via: #include "macros.dtsi"
+ */
+
+/ {
+    macros {
+
+        macro_siai: macro_siai {
+            compatible = "zmk,behavior-macro";
+            label = "SIAI";
+            #binding-cells = <0>;
+            // TODO: replace with actual key sequence
+            bindings = <&kp SPACE>;
+        };
+
+    };
+};

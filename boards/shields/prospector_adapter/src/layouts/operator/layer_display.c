@@ -7,6 +7,9 @@
 
 #include "display_colors.h"
 
+#define LAYER_DOT_BAR_WIDTH 200   // narrower than full screen so connection
+                                  // status widget can sit to the right
+
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 struct layer_display_state {
@@ -15,10 +18,11 @@ struct layer_display_state {
 
 static void layer_display_update_cb(struct layer_display_state state) {
     struct zmk_widget_layer_display *widget;
+    uint32_t active_color = display_color_for_layer(state.index);
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) {
         for (int i = 0; i < LAYER_DOT_COUNT; i++) {
             lv_color_t color = (i == state.index)
-                ? lv_color_hex(DISPLAY_COLOR_LAYER_DOT_ACTIVE)
+                ? lv_color_hex(active_color)
                 : lv_color_hex(DISPLAY_COLOR_LAYER_DOT_INACTIVE);
             lv_obj_set_style_bg_color(widget->dots[i], color, LV_PART_MAIN);
         }
@@ -37,13 +41,14 @@ ZMK_SUBSCRIPTION(widget_layer_display, zmk_layer_state_changed);
 
 int zmk_widget_layer_display_init(struct zmk_widget_layer_display *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
-    lv_obj_set_size(widget->obj, 260, 6);
+    lv_obj_set_size(widget->obj, LAYER_DOT_BAR_WIDTH, 6);
     lv_obj_set_style_bg_opa(widget->obj, LV_OPA_TRANSP, LV_PART_MAIN);
     lv_obj_set_style_border_width(widget->obj, 0, LV_PART_MAIN);
     lv_obj_set_style_pad_all(widget->obj, 0, LV_PART_MAIN);
 
-    int dot_width = (260 - (LAYER_DOT_COUNT - 1) * 3) / LAYER_DOT_COUNT;
     int dot_gap = 3;
+    int dot_width = (LAYER_DOT_BAR_WIDTH - (LAYER_DOT_COUNT - 1) * dot_gap) / LAYER_DOT_COUNT;
+    if (dot_width < 4) dot_width = 4;
 
     for (int i = 0; i < LAYER_DOT_COUNT; i++) {
         widget->dots[i] = lv_obj_create(widget->obj);
